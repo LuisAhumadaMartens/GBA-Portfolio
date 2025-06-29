@@ -24,9 +24,13 @@ jobs:
       - name: Install devkitPro
         if: steps.cache-devkitpro.outputs.cache-hit != 'true'
         run: |
-          wget https://apt.devkitpro.org/install-devkitpro
-          chmod +x ./install-devkitpro
-          sudo ./install-devkitpro
+          # Use the correct, updated URL for the pacman installer script.
+          wget https://apt.devkitpro.org/install-devkitpro-pacman
+          # Make the new script executable.
+          chmod +x ./install-devkitpro-pacman
+          # Run the new script to set up the package manager.
+          sudo ./install-devkitpro-pacman
+          # Update and install the GBA tools.
           sudo dkp-pacman -Syu --noconfirm
           sudo dkp-pacman -S gba-dev --noconfirm
 
