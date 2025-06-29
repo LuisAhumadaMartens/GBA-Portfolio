@@ -14,33 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache devkitPro
-        id: cache-devkitpro
-        uses: actions/cache@v4
-        with:
-          path: /opt/devkitpro
-          key: ${{ runner.os }}-devkitpro
-
-      - name: Install devkitPro
-        if: steps.cache-devkitpro.outputs.cache-hit != 'true'
+      - name: Build with Docker
         run: |
-          # Use the correct, updated URL for the pacman installer script.
-          wget https://apt.devkitpro.org/install-devkitpro-pacman
-          # Make the new script executable.
-          chmod +x ./install-devkitpro-pacman
-          # Run the new script to set up the package manager.
-          sudo ./install-devkitpro-pacman
-          # Update and install the GBA tools.
-          sudo dkp-pacman -Syu --noconfirm
-          sudo dkp-pacman -S gba-dev --noconfirm
-
-      - name: Add devkitPro to PATH
-        run: echo "/opt/devkitpro/tools/bin" >> $GITHUB_PATH
-
-      - name: Run make
-        run: make
-        env:
-          DEVKITPRO: /opt/devkitpro
+          # -v mounts the project code into the container.
+          # -w sets the working directory inside the container.
+          # devkitpro/dev-env:latest is the official image.
+          # 'make' is the command we run inside that environment.
+          docker run --rm -v ${{ github.workspace }}:/src -w /src devkitpro/dev-env:latest make
 
       - name: Upload ROM artifact
         uses: actions/upload-artifact@v4
