@@ -1,4 +1,4 @@
-name: GBA ROM Build
+name: Build GBA ROM
 
 on:
   push:
@@ -14,14 +14,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up devkitPro
-        uses: devkitPro/setup-devkitpro@v3
+      - name: Cache devkitPro
+        id: cache-devkitpro
+        uses: actions/cache@v4
         with:
-          pacman-packages: gba-dev
+          path: /opt/devkitpro
+          key: ${{ runner.os }}-devkitpro
+
+      - name: Install devkitPro
+        if: steps.cache-devkitpro.outputs.cache-hit != 'true'
+        run: |
+          wget https://apt.devkitpro.org/install-devkitpro
+          chmod +x ./install-devkitpro
+          sudo ./install-devkitpro
+          sudo dkp-pacman -Syu --noconfirm
+          sudo dkp-pacman -S gba-dev --noconfirm
+
+      - name: Add devkitPro to PATH
+        run: echo "/opt/devkitpro/tools/bin" >> $GITHUB_PATH
 
       - name: Run make
         run: make
-        shell: bash
+        env:
+          DEVKITPRO: /opt/devkitpro
 
       - name: Upload ROM artifact
         uses: actions/upload-artifact@v4
