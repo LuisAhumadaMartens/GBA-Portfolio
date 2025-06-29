@@ -33,3 +33,8 @@
 
 # Mac OS X
 .DS_Store
+
+#GBA
+*.gba
+*.elf
+*.sav
