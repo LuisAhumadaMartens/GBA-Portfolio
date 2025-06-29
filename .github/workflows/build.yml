@@ -1,0 +1,30 @@
+name: GBA ROM Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up devkitPro
+        uses: devkitPro/setup-devkitpro@v3
+        with:
+          pacman-packages: gba-dev
+
+      - name: Run make
+        run: make
+        shell: bash
+
+      - name: Upload ROM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gba-portfolio-rom
+          path: GBA-Portfolio.gba
