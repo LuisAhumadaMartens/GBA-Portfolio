@@ -1,7 +1,7 @@
-# ROM file.
+# ROM file
 TARGET_NAME := GBA-Portfolio
 
-# C source files here, separated by spaces.
+# C source files here, separated by spaces
 SOURCES     := main.c \
 			   scenes/office/office.c
 
@@ -42,13 +42,17 @@ $(ELF): $(OBJECTS)
 	@echo "Linking object files..."
 	$(CC) $(LDFLAGS) $^ $(LIBPATHS) $(LIBS) -o $@
 
-# Rule to create object files from C source files.
+# Rule to create object files from C source files
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@echo "Compiling $<..."
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Clean rule to remove build files and the ROM.
+# Clean rule to remove build files and the ROM
 clean:
 	@echo "Cleaning up build files..."
 	rm -rf $(BUILD_DIR) $(ROM)
+
+# Clean rule to remove all build files, the ROM, and save files
+clean-all: clean
+	rm -rf $(ROM:.gba=.sav)
