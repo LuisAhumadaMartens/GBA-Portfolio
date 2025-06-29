@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "DevkitPro",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${DEVKITPRO}/**"
+            ]
+        }
+    ],
+    "version": 4
+}
