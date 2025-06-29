@@ -1,9 +1,11 @@
 # ROM file
 TARGET_NAME := GBA-Portfolio
 
-# C source files here, separated by spaces
-SOURCES     := main.c \
-			   scenes/office/office.c
+# Build directories
+BUILD_DIR := build
+
+# C Source Files
+SOURCES     := $(shell find . -name '*.c')
 
 # Libraries
 LIBS        := -ltonc
@@ -13,18 +15,15 @@ CC      := arm-none-eabi-gcc
 OBJCOPY := arm-none-eabi-objcopy
 GBAFIX  := gbafix
 
-# Build directories
-BUILD_DIR := build
-
-# Auto-generate file names
-OBJECTS := $(addprefix $(BUILD_DIR)/,$(SOURCES:.c=.o))
-ELF     := $(BUILD_DIR)/$(TARGET_NAME).elf
-ROM     := $(TARGET_NAME).gba
+# Auto-generate file paths
+OBJECTS     := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
+ELF         := $(BUILD_DIR)/$(TARGET_NAME).elf
+ROM         := $(TARGET_NAME).gba
 
 # Flags for the compiler and linker
-INCLUDES := -I/opt/devkitpro/libtonc/include
+INCLUDES := -I. -I/opt/devkitpro/libtonc/include
 LIBPATHS := -L/opt/devkitpro/libtonc/lib
-CFLAGS   := -mthumb-interwork -mthumb -O2
+CFLAGS   := -mthumb-interwork -mthumb -O2 $(INCLUDES)
 LDFLAGS  := -mthumb-interwork -mthumb -specs=gba.specs
 
 # Build ROM
@@ -46,9 +45,9 @@ $(ELF): $(OBJECTS)
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean rule to remove build files and the ROM
+# Rule to clean up all generated files.
 clean:
 	@echo "Cleaning up build files..."
 	rm -rf $(BUILD_DIR) $(ROM)
@@ -56,3 +55,6 @@ clean:
 # Clean rule to remove all build files, the ROM, and save files
 clean-all: clean
 	rm -rf $(ROM:.gba=.sav)
+
+# Phony targets are not actual files.
+.PHONY: clean-all
