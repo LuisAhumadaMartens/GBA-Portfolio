@@ -39,3 +39,6 @@
 *.elf
 *.sav
 build/
+
+# Licenses
+LICENSE
