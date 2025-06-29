@@ -18,9 +18,9 @@ jobs:
         run: |
           # -v mounts the project code into the container.
           # -w sets the working directory inside the container.
-          # devkitpro/dev-env:latest is the official image.
+          # devkitpro/devkitarm:latest is the correct image for GBA development.
           # 'make' is the command we run inside that environment.
-          docker run --rm -v ${{ github.workspace }}:/src -w /src devkitpro/dev-env:latest make
+          docker run --rm -v ${{ github.workspace }}:/src -w /src devkitpro/devkitarm:latest make
 
       - name: Upload ROM artifact
         uses: actions/upload-artifact@v4
