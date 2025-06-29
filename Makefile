@@ -2,7 +2,8 @@
 TARGET_NAME := GBA-Portfolio
 
 # C source files here, separated by spaces.
-SOURCES     := main.c
+SOURCES     := main.c \
+			   scenes/office/office.c
 
 # Libraries
 LIBS        := -ltonc
