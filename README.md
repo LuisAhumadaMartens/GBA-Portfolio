@@ -31,21 +31,28 @@ The immediate goal is to flesh out the office environment. After that, the first
 ## Setup and Build
 
 To compile this project, you will need to install and configure the **devkitPro** toolchain.
+You can build it natively on your machine by following the manual installation guide or you can use Docker.
 
-You can install it directly or 
+***
 
-### Building with Docker (Recommended)
+### Building with Docker :whale: (Recommended)
 
 This is the easiest method and works on Windows, macOS, and Linux without needing to install devkitPro manually.
 
 1.  **Install Docker:** Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
 2.  **Compile:** Open your terminal, navigate to the project's root directory, and run the following command:
     ```bash
-    docker run --rm -v "${PWD}:/src" -w /src devkitpro/devkitarm:latest make
+    docker run --rm -v "${PWD}:/src" -w /src -e DEVKITPRO="/opt/devkitpro" devkitpro/devkitarm:latest /bin/bash -c 'export PATH="$DEVKITPRO/tools/bin:$DEVKITPRO/devkitARM/bin:$PATH" && make'
     ```
-This command downloads the official devkitPro environment, compiles the code inside it, and the final `GBA-Portfolio.gba` ROM will be created in your project folder.
+This command downloads the official devkitPro environment, sets up the correct environment variables, compiles the code, and the final `GBA-Portfolio.gba` ROM will be created in your project folder.
 
-### Installation (macOS)
+***
+
+### Building Natively (macOS)
+
+Follow these steps if you want to install the full devkitPro toolchain on your local machine.
+
+#### Installation
 
 * **Prerequisite:** You may need to install the Xcode Command Line Tools. Open the Terminal and run:
     ```bash
@@ -76,19 +83,11 @@ You need to tell your terminal where to find the devkitPro tools.
     ```
 * **Apply Changes:** Save the file, then **close and open a new terminal window** for the changes to take effect.
 
-### Compilation
+#### Compilation
 
 With the environment set up, you can now build the ROM.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/LuisAhumadaMartens/GBA-Portfolio/
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd GBA-Portfolio
-    ```
-3.  **Compile the code:**
+* **Compile the code:**
     ```bash
     make
     ```
