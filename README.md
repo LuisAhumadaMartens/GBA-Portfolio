@@ -6,7 +6,7 @@ This repository serves as my personal portfolio for Game Boy Advance development
 
 The goal of this project is to create an interactive hub world in the form of a virtual office. By exploring the office, the player can interact with objects that showcase my skills, accomplishments, and past work. The office will also serve as a portal to various mini-game demos.
 
-## Current Status: 🚧 Building the Foundation
+## Current Status: :construction: Building the Foundation :construction:
 
 The project is currently in the initial construction phase, focused on building the core engine and the office hub.
 
@@ -19,7 +19,7 @@ The project is currently in the initial construction phase, focused on building 
 The immediate goal is to flesh out the office environment. After that, the first of many planned mini-games will be developed.
 
 * **Office Hub:** Implement interactable objects that link to portfolio items (e.g., displaying text about my skills, projects, and accomplishments).
-* **Mini-Game Demo:** "Completos Overcooked!"** An `Overcooked`-inspired infinite mini-game based on the theme of making Chilean *completos*.
+* **Mini-Game Demo :chile::hotdog::** An *Overcooked*-inspired infinite mini-game based on the theme of making Chilean *completos*.
 
 ## Technology Stack
 
